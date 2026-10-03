@@ -6,6 +6,7 @@ import RtsExplorer from '../components/RtsExplorer.astro';
 import PartnerFlow from '../components/PartnerFlow.astro';
 import { site, parent, partner } from '../data/site';
 import { competencies, benchmarks, domains } from '../data/framework';
+import { photos, heroVideo } from '../data/media';
 import { levels, programStatus } from '../data/education';
 
 const parentStat = parent.status === 'approved' ? '대한물리치료사협회 산하' : '대한물리치료사협회 산하 추진';
@@ -14,7 +15,10 @@ const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${pa
 ---
 <Base>
   <section class="hero">
-    <div class="hero__bg"></div>
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster={heroVideo.poster} aria-hidden="true" tabindex="-1" data-hero-video>
+      <source src={heroVideo.src} type="video/mp4" />
+    </video>
+    <div class="hero__scrim" aria-hidden="true"></div>
     <div class="container hero__inner">
       <div class="hero__copy">
         <span class="hero__eyebrow">KOREAN ACADEMY OF EXERCISE REHABILITATION</span>
@@ -26,7 +30,6 @@ const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${pa
         </div>
         <p class="hero__keys">ASSESS · TREAT · REHABILITATE · RETURN</p>
       </div>
-      <div class="hero__art" aria-hidden="true"><img src="/img/hero-illustration.svg" alt="" width="560" height="520" fetchpriority="high" /></div>
     </div>
     <div class="container">
       <dl class="hero__stats">
@@ -36,6 +39,7 @@ const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${pa
         <div><dt>다루는 영역</dt><dd>근골격계 질환 · 수술 후 재활 · 스포츠 복귀</dd></div>
       </dl>
     </div>
+    <button type="button" class="hero__toggle" aria-pressed="false" aria-label="배경 영상 일시정지" data-hero-toggle><span aria-hidden="true">❚❚</span></button>
   </section>
 
   <section class="section" id="domains">
@@ -48,7 +52,7 @@ const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${pa
       <div class="grid grid-3">
         {domains.map((d) => (
           <a href={`/exercise-rehab/#${d.id === 'postop' ? 'postop' : d.id === 'sport' ? 'continuum' : 'domains'}`} class="card card--link pillar reveal">
-            <div class="icon-badge"><Icon name={d.icon} /></div>
+            <div class="pillar__photo"><img src={photos[d.photo].src} alt={photos[d.photo].alt} width={photos[d.photo].w} height={photos[d.photo].h} loading="lazy" style={`object-position:${photos[d.photo].pos}`} /></div>
             <span class="pillar__en">{d.en}</span>
             <h3 class="h-card">{d.title}</h3>
             <p>{d.desc}</p>
@@ -151,29 +155,54 @@ const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${pa
   <CtaBand />
 </Base>
 
+<script>
+  const v = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  const t = document.querySelector<HTMLButtonElement>('[data-hero-toggle]');
+  if (v && t) {
+    const label = (paused: boolean) => {
+      t.setAttribute('aria-pressed', String(paused));
+      t.setAttribute('aria-label', paused ? '배경 영상 재생' : '배경 영상 일시정지');
+      t.firstElementChild!.textContent = paused ? '▶' : '❚❚';
+    };
+    const saveData = (navigator as unknown as { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || saveData) {
+      v.pause();
+      label(true);
+    }
+    t.addEventListener('click', () => {
+      if (v.paused) { v.play().catch(() => {}); label(false); } else { v.pause(); label(true); }
+    });
+  }
+</script>
+
 <style>
   .hero { position: relative; background: var(--navy-950); color: #fff; overflow: hidden; }
-  .hero__bg { position: absolute; inset: 0; background: url('/img/hero-bg.svg') center / cover no-repeat; opacity: .9; }
-  .hero__inner { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; padding-top: 84px; padding-bottom: 36px; }
+  .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero__scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 24, 44, .92) 0%, rgba(7, 24, 44, .76) 44%, rgba(7, 24, 44, .22) 100%), linear-gradient(180deg, rgba(7, 24, 44, 0) 55%, rgba(7, 24, 44, .92) 100%); }
+  .hero__toggle { position: absolute; right: 24px; bottom: 24px; z-index: 3; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); background: rgba(7, 24, 44, .55); color: #fff; font-size: 12px; letter-spacing: -2px; cursor: pointer; display: grid; place-items: center; backdrop-filter: blur(6px); }
+  .hero__toggle:hover { background: rgba(7, 24, 44, .8); border-color: #fff; }
+  .hero__toggle[aria-pressed='true'] span { letter-spacing: 0; padding-left: 3px; }
+  .hero__inner { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 660px) 1fr; gap: 24px; align-items: center; padding-top: 96px; padding-bottom: 40px; }
   .hero__eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--accent-300); margin-bottom: 20px; }
   .hero h1 em { font-style: normal; color: var(--accent-300); }
   .hero__lead { margin-top: 24px; max-width: 560px; font-size: 18px; line-height: 1.8; color: rgba(255, 255, 255, .78); }
   .hero__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
   .hero__keys { margin-top: 28px; font-size: 12.5px; font-weight: 600; letter-spacing: .18em; color: rgba(255, 255, 255, .5); }
-  .hero__art img { width: 100%; max-width: 560px; height: auto; margin-left: auto; }
-  .hero__stats { position: relative; margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255, 255, 255, .16); }
+  .hero__stats { position: relative; z-index: 2; margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255, 255, 255, .16); }
   .hero__stats div { padding: 24px 16px 28px 0; }
   .hero__stats dt { font-size: 13px; color: rgba(255, 255, 255, .55); }
   .hero__stats dd { margin: 4px 0 0; font-size: 18px; font-weight: 700; line-height: 1.4; }
   @media (max-width: 900px) {
-    .hero__inner { grid-template-columns: 1fr; padding-top: 56px; }
-    .hero__art { max-width: 300px; margin: 8px auto 0; }
-    .hero__art img { margin: 0 auto; }
+    .hero__inner { grid-template-columns: 1fr; padding-top: 64px; }
+    .hero__scrim { background: linear-gradient(180deg, rgba(7, 24, 44, .74) 0%, rgba(7, 24, 44, .68) 40%, rgba(7, 24, 44, .9) 100%); }
     .hero__stats { grid-template-columns: repeat(2, 1fr); }
     .hero__stats dd { font-size: 16px; }
   }
 
-  .pillar { display: flex; flex-direction: column; }
+  .pillar { display: flex; flex-direction: column; overflow: hidden; }
+  .pillar__photo { margin: -32px -32px 24px; aspect-ratio: 3 / 2; overflow: hidden; background: var(--bg-soft); }
+  .pillar__photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+  .pillar:hover .pillar__photo img { transform: scale(1.05); }
   .pillar__en { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-600); }
   .pillar h3 { margin-top: 4px; }
   .pillar__ex { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }

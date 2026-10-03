@@ -6,9 +6,10 @@ import Icon from '../components/Icon.astro';
 import RtsExplorer from '../components/RtsExplorer.astro';
 import RoleTable from '../components/RoleTable.astro';
 import { competencies, rtsCitation, domains, postopPhases, postopNote } from '../data/framework';
+import { photos } from '../data/media';
 ---
 <Base title="운동재활 프레임워크" description="근골격계 질환, 수술 후 재활, 스포츠 복귀를 아우르는 운동재활의 로드맵과 복귀 연속체, 8개 전문 역량, 직종별 역할 구분을 정리한 대한운동재활학회의 프레임워크입니다.">
-  <PageHero eyebrow="Exercise Rehabilitation" title="운동재활 프레임워크" desc="다루는 영역, 수술 후 재활 로드맵, 복귀 연속체, 8개 전문 역량, 직종별 역할 구분. 학회가 운동재활을 바라보는 기본 틀입니다." />
+  <PageHero eyebrow="Exercise Rehabilitation" title="운동재활 프레임워크" desc="다루는 영역, 수술 후 재활 로드맵, 복귀 연속체, 8개 전문 역량, 직종별 역할 구분. 학회가 운동재활을 바라보는 기본 틀입니다." photo="gait-bars" />
 
   <nav class="subnav">
     <div class="container">
@@ -31,6 +32,7 @@ import { competencies, rtsCitation, domains, postopPhases, postopNote } from '..
       <div class="grid grid-3">
         {domains.map((d) => (
           <article class="dm reveal">
+            <div class="dm__photo"><img src={photos[d.photo].src} alt={photos[d.photo].alt} width={photos[d.photo].w} height={photos[d.photo].h} loading="lazy" style={`object-position:${photos[d.photo].pos}`} /></div>
             <div class="icon-badge"><Icon name={d.icon} /></div>
             <span class="dm__en">{d.en}</span>
             <h3>{d.title}</h3>
@@ -128,7 +130,9 @@ import { competencies, rtsCitation, domains, postopPhases, postopNote } from '..
 </Base>
 
 <style>
-  .dm { padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .dm { padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .dm__photo { margin: -28px -28px 22px; aspect-ratio: 3 / 2; overflow: hidden; }
+  .dm__photo img { width: 100%; height: 100%; object-fit: cover; }
   .dm__en { display: block; margin-top: 4px; font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-600); }
   .dm h3 { margin-top: 4px; font-size: 22px; font-weight: 800; color: var(--navy-900); }
   .dm p { margin-top: 10px; color: var(--ink-2); font-size: 15px; line-height: 1.75; }

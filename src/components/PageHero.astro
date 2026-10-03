@@ -1,20 +1,41 @@
 ---
+import { photos, type PhotoKey } from '../data/media';
 interface Props {
   eyebrow: string;
   title: string;
   desc?: string;
+  photo?: PhotoKey;
 }
-const { eyebrow, title, desc } = Astro.props;
+const { eyebrow, title, desc, photo } = Astro.props;
+const ph = photo ? photos[photo] : null;
 ---
-<section class="page-hero">
+<section class:list={['page-hero', { 'has-photo': !!ph }]}>
   <div class="page-hero__bg"></div>
-  <div class="container">
-    <nav class="crumbs" aria-label="현재 위치"><a href="/">홈</a> <span aria-hidden="true">/</span> {title}</nav>
-    <span class="eyebrow">{eyebrow}</span>
-    <h1>{title}</h1>
-    {desc && <p>{desc}</p>}
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <nav class="crumbs" aria-label="현재 위치"><a href="/">홈</a> <span aria-hidden="true">/</span> {title}</nav>
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
+      {desc && <p>{desc}</p>}
+    </div>
+    {ph && (
+      <figure class="hero-photo">
+        <img src={ph.src} alt={ph.alt} width={ph.w} height={ph.h} style={`object-position:${ph.pos ?? 'center'}`} fetchpriority="high" />
+      </figure>
+    )}
   </div>
 </section>
 <style>
   .page-hero__bg { background-image: url('/img/hero-bg.svg'); opacity: 1; }
+  .hero-grid { display: block; }
+  .has-photo { padding: 96px 0 88px; }
+  .has-photo .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .hero-photo { margin: 0; position: relative; aspect-ratio: 5 / 4; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, .45); }
+  .hero-photo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); pointer-events: none; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 900px) {
+    .has-photo { padding: 80px 0 56px; }
+    .has-photo .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero-photo { aspect-ratio: 16 / 10; }
+  }
 </style>

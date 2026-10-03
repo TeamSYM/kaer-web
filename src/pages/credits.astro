@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { photos, heroVideo } from '../data/media';
+
+const list = Object.entries(photos);
+---
+<Base title="이미지 출처" description="대한운동재활학회 사이트에 사용한 사진과 영상의 촬영자, 출처, 라이선스를 안내합니다. 사진 속 인물은 모델입니다." noindex>
+  <PageHero eyebrow="Credits" title="이미지 출처" desc="사이트의 사진과 영상은 상업적 이용이 가능한 무료 라이선스 자료입니다. 촬영자와 출처를 밝힙니다." />
+
+  <section class="section">
+    <div class="container">
+      <div class="note-box">
+        <strong>안내.</strong> 사진과 영상 속 인물은 모델이며 학회 회원이나 실제 환자가 아닙니다. 사진은 <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer" class="ul">Unsplash 라이선스</a>, 영상은 <a href="https://www.pexels.com/license/" target="_blank" rel="noopener noreferrer" class="ul">Pexels 라이선스</a>에 따라 사용합니다.
+      </div>
+
+      <h2 class="h-card" style="margin-top:48px">사진</h2>
+      <ul class="cr">
+        {list.map(([key, p]) => (
+          <li class="cr__item">
+            <img src={p.src} alt={p.alt} width={p.w} height={p.h} loading="lazy" />
+            <div>
+              <strong>{p.by}</strong>
+              <span>{p.alt}</span>
+              <a href={p.url} target="_blank" rel="noopener noreferrer">{p.site}에서 보기 <Icon name="external" size={14} /></a>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="h-card" style="margin-top:48px">홈 화면 영상</h2>
+      <p class="muted" style="margin-top:8px">아래 세 개의 영상 클립을 이어 붙여 편집했습니다.</p>
+      <ul class="cr cr--v">
+        {heroVideo.clips.map((c) => (
+          <li class="cr__item cr__item--v">
+            <div>
+              <strong>{c.by}</strong>
+              <span>{c.title}</span>
+              <a href={c.url} target="_blank" rel="noopener noreferrer">Pexels에서 보기 <Icon name="external" size={14} /></a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ul { text-decoration: underline; }
+  .cr { margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .cr--v { grid-template-columns: repeat(3, 1fr); }
+  .cr__item { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; }
+  .cr__item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .cr__item > div { padding: 4px 18px 18px; display: flex; flex-direction: column; gap: 4px; }
+  .cr__item--v > div { padding: 18px; }
+  .cr__item strong { font-size: 16px; color: var(--navy-900); }
+  .cr__item span { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; }
+  .cr__item a { margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--accent-600); }
+  .cr__item a:hover { text-decoration: underline; }
+  @media (max-width: 900px) { .cr, .cr--v { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .cr, .cr--v { grid-template-columns: 1fr; } }
+</style>

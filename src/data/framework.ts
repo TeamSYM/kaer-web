@@ -94,17 +94,17 @@ export const rtsCitation = {
 // 학회가 다루는 세 가지 영역
 export const domains = [
   {
-    id: 'msk', icon: 'activity', title: '근골격계 질환', en: 'Musculoskeletal Conditions',
+    id: 'msk', photo: 'msk-shoulder', icon: 'activity', title: '근골격계 질환', en: 'Musculoskeletal Conditions',
     desc: '척추와 관절의 만성·퇴행성 질환, 근육과 힘줄 질환에서 통증을 줄이고 기능과 활동 수준을 되찾습니다.',
     examples: ['만성 요통 · 경부통', '퇴행성 관절 질환(무릎 · 고관절)', '어깨 충돌 · 회전근개 병변', '건병증과 과사용 증상'],
   },
   {
-    id: 'postop', icon: 'layers', title: '수술 후 재활', en: 'Post-operative Rehabilitation',
+    id: 'postop', photo: 'postop-knee', icon: 'layers', title: '수술 후 재활', en: 'Post-operative Rehabilitation',
     desc: '수술 의사의 프로토콜을 존중하면서, 보호기부터 기능 회복까지 기준에 따라 단계적으로 이끕니다.',
     examples: ['전방십자인대 재건술', '인공관절 치환술(무릎 · 고관절)', '회전근개 봉합술', '척추 수술 후 재활'],
   },
   {
-    id: 'sport', icon: 'flag', title: '스포츠 손상과 복귀', en: 'Sports Injury & Return',
+    id: 'sport', photo: 'sport-start', icon: 'flag', title: '스포츠 손상과 복귀', en: 'Sports Injury & Return',
     desc: '급성·과사용 손상을 평가하고 컨디셔닝으로 연결해 훈련과 경기 현장으로 복귀하도록 돕습니다.',
     examples: ['발목 · 무릎 급성 손상', '어깨 · 팔꿈치 과사용 손상', '근육 · 힘줄 손상', '재손상 예방'],
   },
