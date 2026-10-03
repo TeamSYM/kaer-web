@@ -19,7 +19,7 @@ npm run build    # dist/ 생성 (sitemap 포함)
 | 로고·대표 이미지·일러스트 | `public/img/` (생성 스크립트: `tools/make_assets.py`, 파일을 직접 교체해도 된다) |
 
 ## 반드시 확정해서 채울 값 (비어 있으면 화면에서 숨겨지거나 "설립 추진"으로 표기된다)
-1. `site.ts` → `parent.status`: 대한물리치료사협회 승인 공문 등 근거가 확정되면 `'approved'`. 그 전에는 "산하 학회 설립 추진"으로 표기된다.
+1. `site.ts` → `parent.status`: 학회 측 확인에 따라 `'approved'`(대한물리치료사협회 산하 대한운동재활물리치료분과학회)로 설정함. 승인 공문 사본은 확보해 두세요.
 2. `site.ts` → `partner.status`, `partner.signedDate`: 업무협약 체결이 확정되면 일자를 넣는다. `partner.logo`에 협회 로고 경로를 넣으면 이름 표기 대신 로고가 나온다.
 3. `site.ts` → `contact`: 이메일·전화·주소. 비어 있으면 푸터에 "문의 양식 이용" 안내만 나온다.
 4. `education.ts` → `programStatus`: 교육과정·평점 기준을 이사회가 확정하면 `'confirmed'`로 바꾸고 `hours`(시수)를 채운다. 지금 값은 모두 **안(案)**이다.
