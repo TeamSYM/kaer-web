@@ -5,13 +5,15 @@ import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
 import RtsExplorer from '../components/RtsExplorer.astro';
 import RoleTable from '../components/RoleTable.astro';
-import { competencies, rtsCitation } from '../data/framework';
+import { competencies, rtsCitation, domains, postopPhases, postopNote } from '../data/framework';
 ---
-<Base title="운동재활 프레임워크" description="평가에서 치료, 운동재활, 복귀까지 이어지는 운동재활의 연속체와 8개 전문 역량, 직종별 역할 구분을 정리한 대한운동재활학회의 프레임워크입니다.">
-  <PageHero eyebrow="Exercise Rehabilitation" title="운동재활 프레임워크" desc="복귀 연속체, 8개 전문 역량, 직종별 역할 구분. 학회가 운동재활을 바라보는 기본 틀입니다." />
+<Base title="운동재활 프레임워크" description="근골격계 질환, 수술 후 재활, 스포츠 복귀를 아우르는 운동재활의 로드맵과 복귀 연속체, 8개 전문 역량, 직종별 역할 구분을 정리한 대한운동재활학회의 프레임워크입니다.">
+  <PageHero eyebrow="Exercise Rehabilitation" title="운동재활 프레임워크" desc="다루는 영역, 수술 후 재활 로드맵, 복귀 연속체, 8개 전문 역량, 직종별 역할 구분. 학회가 운동재활을 바라보는 기본 틀입니다." />
 
   <nav class="subnav">
     <div class="container">
+      <a href="#domains">다루는 영역</a>
+      <a href="#postop">수술 후 재활</a>
       <a href="#continuum">복귀 연속체</a>
       <a href="#competency">전문 역량</a>
       <a href="#roles">역할 구분</a>
@@ -19,13 +21,45 @@ import { competencies, rtsCitation } from '../data/framework';
     </div>
   </nav>
 
+  <section class="section" id="domains">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Scope</span>
+        <h2 class="h-section">세 가지 영역을 하나의 체계로 다룹니다</h2>
+        <p class="lead">근골격계 질환, 수술 후 재활, 스포츠 손상은 출발점이 다르지만 평가, 단계적 운동재활, 복귀 기준이라는 같은 뼈대 위에서 다룰 수 있습니다.</p>
+      </div>
+      <div class="grid grid-3">
+        {domains.map((d) => (
+          <article class="dm reveal">
+            <div class="icon-badge"><Icon name={d.icon} /></div>
+            <span class="dm__en">{d.en}</span>
+            <h3>{d.title}</h3>
+            <p>{d.desc}</p>
+            <ul>{d.examples.map((e) => <li>{e}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="postop">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Post-operative Roadmap</span>
+        <h2 class="h-section">수술 후 재활은 시간이 아니라 기준으로 나아갑니다</h2>
+        <p class="lead">보호기에서 가동·활성화기, 근력·기능 강화기, 복귀기로 이어지는 네 단계를 살펴보고, 각 단계에서 확인해야 할 기준을 직접 점검해 보세요. 수술 의사의 프로토콜을 존중하는 것이 출발점입니다.</p>
+      </div>
+      <RtsExplorer phases={postopPhases} note={postopNote} cite={null} id="postop" label="수술 후 재활 단계" />
+    </div>
+  </section>
+
   <section class="section" id="continuum">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Return-to-Sport Continuum</span>
-        <h2 class="h-section">복귀는 한 번의 결정이 아니라 하나의 연속체입니다</h2>
+        <h2 class="h-section">스포츠 복귀는 한 번의 결정이 아니라 하나의 연속체입니다</h2>
         <p class="lead">
-          손상 후 경기장으로 돌아가는 과정은 "참여 복귀 → 스포츠 복귀 → 퍼포먼스 복귀"로 이어지는 연속체로 이해합니다. 복귀는 재활이 끝난 뒤 내리는 단 한 번의 결정이 아니라, 재활과 나란히 진행되는 과정입니다.
+          스포츠 손상 후 경기장으로 돌아가는 과정은 "참여 복귀 → 스포츠 복귀 → 퍼포먼스 복귀"로 이어지는 연속체로 이해합니다. 복귀는 재활이 끝난 뒤 내리는 단 한 번의 결정이 아니라, 재활과 나란히 진행되는 과정입니다.
         </p>
       </div>
       <RtsExplorer />
@@ -94,6 +128,13 @@ import { competencies, rtsCitation } from '../data/framework';
 </Base>
 
 <style>
+  .dm { padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .dm__en { display: block; margin-top: 4px; font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-600); }
+  .dm h3 { margin-top: 4px; font-size: 22px; font-weight: 800; color: var(--navy-900); }
+  .dm p { margin-top: 10px; color: var(--ink-2); font-size: 15px; line-height: 1.75; }
+  .dm ul { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .dm li { position: relative; padding-left: 16px; font-size: 14px; color: var(--ink-2); }
+  .dm li::before { content: ''; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-600); }
   .two { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 800px) { .two { grid-template-columns: 1fr; } }
 

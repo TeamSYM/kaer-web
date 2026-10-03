@@ -1,10 +1,13 @@
 ---
-import { phases, rtsNote, rtsCitation } from '../data/framework';
+import { phases as sportPhases, rtsNote, rtsCitation } from '../data/framework';
+import type { Phase } from '../data/framework';
+interface Props { phases?: Phase[]; note?: string; cite?: { text: string; doi: string } | null; id?: string; label?: string }
+const { phases = sportPhases, note = rtsNote, cite = rtsCitation, id = 'rts', label = '복귀 연속체 단계' } = Astro.props;
 ---
 <div class="rts" data-rts>
-  <div class="rts__steps" role="tablist" aria-label="복귀 연속체 단계">
+  <div class="rts__steps" role="tablist" aria-label={label} style={`--n:${phases.length}`}>
     {phases.map((p, i) => (
-      <button type="button" role="tab" class="rts__step" id={`rts-tab-${i}`} aria-controls={`rts-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-i={i}>
+      <button type="button" role="tab" class="rts__step" id={`${id}-tab-${i}`} aria-controls={`${id}-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-i={i}>
         <span class="rts__no">{p.no}</span>
         <strong>{p.ko}</strong>
         <em>{p.en}</em>
@@ -16,7 +19,7 @@ import { phases, rtsNote, rtsCitation } from '../data/framework';
   {phases.map((p, i) => {
     const total = p.domains.reduce((n, d) => n + d.items.length, 0);
     return (
-      <section class="rts__panel" role="tabpanel" id={`rts-panel-${i}`} aria-labelledby={`rts-tab-${i}`} hidden={i !== 0} data-panel={i} data-total={total}>
+      <section class="rts__panel" role="tabpanel" id={`${id}-panel-${i}`} aria-labelledby={`${id}-tab-${i}`} hidden={i !== 0} data-panel={i} data-total={total}>
         <div class="rts__top">
           <div>
             <h3>{p.ko} <small>{p.en}</small></h3>
@@ -43,13 +46,13 @@ import { phases, rtsNote, rtsCitation } from '../data/framework';
     );
   })}
 
-  <p class="rts__note">{rtsNote}</p>
-  <p class="rts__cite">근거: <a href={rtsCitation.doi} target="_blank" rel="noopener noreferrer">{rtsCitation.text} ↗</a></p>
+  <p class="rts__note">{note}</p>
+  {cite && <p class="rts__cite">근거: <a href={cite.doi} target="_blank" rel="noopener noreferrer">{cite.text} ↗</a></p>}
 </div>
 
 <style>
   .rts { background: #fff; color: var(--ink); border-radius: var(--radius-lg); border: 1px solid var(--line); box-shadow: var(--shadow-lg); padding: 28px; }
-  .rts__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; position: relative; }
+  .rts__steps { display: grid; grid-template-columns: repeat(var(--n, 3), 1fr); gap: 12px; position: relative; }
   .rts__step { position: relative; text-align: left; font: inherit; cursor: pointer; padding: 18px 20px 18px 20px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg-soft); display: flex; flex-direction: column; gap: 2px; transition: border-color .2s, background .2s, box-shadow .2s; }
   .rts__step:hover { border-color: var(--navy-700); }
   .rts__step[aria-selected='true'] { background: var(--navy-900); border-color: var(--navy-900); color: #fff; box-shadow: 0 10px 24px rgba(11, 35, 64, .25); }

@@ -5,17 +5,12 @@ import Icon from '../components/Icon.astro';
 import RtsExplorer from '../components/RtsExplorer.astro';
 import PartnerFlow from '../components/PartnerFlow.astro';
 import { site, parent, partner } from '../data/site';
-import { competencies, benchmarks } from '../data/framework';
+import { competencies, benchmarks, domains } from '../data/framework';
 import { levels, programStatus } from '../data/education';
 
 const parentStat = parent.status === 'approved' ? '대한물리치료사협회 산하' : '대한물리치료사협회 산하 추진';
 const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${partner.short} MOU 추진`;
 
-const pillars = [
-  { icon: 'clipboard', title: '평가 · 치료', en: 'Assess & Treat', desc: '손상의 원인과 상태를 정확히 평가하고, 근거에 따라 치료적 중재를 선택합니다.', href: '/exercise-rehab/#competency' },
-  { icon: 'dumbbell', title: '운동재활', en: 'Rehabilitate', desc: '가동범위에서 근력, 신경근 조절, 기능 동작으로 이어지는 단계별 운동재활을 설계합니다.', href: '/exercise-rehab/#competency' },
-  { icon: 'flag', title: '복귀 · 퍼포먼스', en: 'Return & Perform', desc: '복귀 시점을 날짜가 아닌 기준으로 판단하고, 컨디셔닝과 현장 복귀로 매끄럽게 잇습니다.', href: '/exercise-rehab/#continuum' },
-];
 ---
 <Base>
   <section class="hero">
@@ -24,7 +19,7 @@ const pillars = [
       <div class="hero__copy">
         <span class="hero__eyebrow">KOREAN ACADEMY OF EXERCISE REHABILITATION</span>
         <h1 class="h-display">치료에서 복귀까지,<br /><em>근거로 이어지는</em><br />운동재활.</h1>
-        <p class="hero__lead">평가, 치료, 운동재활, 그리고 현장 복귀. 따로 놓여 있던 단계를 하나의 흐름으로 잇는 것이 대한운동재활학회의 일입니다. 근거에 기반한 교육·연구·협력으로 그 기준을 만들어 갑니다.</p>
+        <p class="hero__lead">근골격계 질환에서 수술 후 재활, 스포츠 복귀까지. 평가와 치료, 운동재활, 그리고 일상과 현장으로의 복귀를 하나의 흐름으로 잇는 것이 대한운동재활학회의 일입니다. 근거에 기반한 교육·연구·협력으로 그 기준을 만들어 갑니다.</p>
         <div class="hero__actions">
           <a href="/apply/" class="btn btn--primary">회원 가입 · 문의</a>
           <a href="/exercise-rehab/" class="btn btn--ghost">운동재활 프레임워크 보기</a>
@@ -38,25 +33,26 @@ const pillars = [
         <div><dt>소속</dt><dd>{parentStat}</dd></div>
         <div><dt>협력</dt><dd>{partnerStat}</dd></div>
         <div><dt>교육 기준</dt><dd>복귀 연속체 기반</dd></div>
-        <div><dt>대상</dt><dd>물리치료사 · 운동재활 전문가</dd></div>
+        <div><dt>다루는 영역</dt><dd>근골격계 질환 · 수술 후 재활 · 스포츠 복귀</dd></div>
       </dl>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="domains">
     <div class="container">
       <div class="section-head section-head--center">
-        <span class="eyebrow">Why KAER</span>
-        <h2 class="h-section">재활은 치료실에서 끝나지 않습니다</h2>
-        <p class="lead">치료가 끝난 뒤 운동으로 이어지지 못하거나, 평가 없이 운동만으로 복귀하는 일이 현장에서는 흔합니다. 우리는 그 사이의 빈 곳을 채웁니다.</p>
+        <span class="eyebrow">Scope</span>
+        <h2 class="h-section">근골격계 질환부터 수술 후 재활, 스포츠 복귀까지</h2>
+        <p class="lead">통증이 있는 분에게도, 수술을 받은 분에게도, 경기장으로 돌아가려는 선수에게도 필요한 것은 같습니다. 평가에서 복귀까지 끊김 없이 이어지는 운동재활입니다.</p>
       </div>
       <div class="grid grid-3">
-        {pillars.map((p) => (
-          <a href={p.href} class="card card--link pillar reveal">
-            <div class="icon-badge"><Icon name={p.icon} /></div>
-            <span class="pillar__en">{p.en}</span>
-            <h3 class="h-card">{p.title}</h3>
-            <p>{p.desc}</p>
+        {domains.map((d) => (
+          <a href={`/exercise-rehab/#${d.id === 'postop' ? 'postop' : d.id === 'sport' ? 'continuum' : 'domains'}`} class="card card--link pillar reveal">
+            <div class="icon-badge"><Icon name={d.icon} /></div>
+            <span class="pillar__en">{d.en}</span>
+            <h3 class="h-card">{d.title}</h3>
+            <p>{d.desc}</p>
+            <ul class="pillar__ex">{d.examples.map((e) => <li>{e}</li>)}</ul>
             <span class="pillar__go">자세히 보기 <Icon name="arrow" size={16} /></span>
           </a>
         ))}
@@ -69,10 +65,10 @@ const pillars = [
       <div class="section-head">
         <span class="eyebrow">Return-to-Sport Continuum</span>
         <h2 class="h-section">복귀는 날짜가 아니라 기준으로 결정합니다</h2>
-        <p class="lead">참여 복귀에서 스포츠 복귀, 퍼포먼스 복귀로 이어지는 연속체를 단계별로 살펴보고, 각 단계에서 확인해야 할 기준을 직접 점검해 보세요.</p>
+        <p class="lead">스포츠 손상에서 참여 복귀, 스포츠 복귀, 퍼포먼스 복귀로 이어지는 연속체를 단계별로 살펴보고 확인해야 할 기준을 직접 점검해 보세요. 수술 후 재활 로드맵은 운동재활 페이지에서 볼 수 있습니다.</p>
       </div>
       <RtsExplorer />
-      <p class="more-link"><a href="/exercise-rehab/#continuum">복귀 연속체와 역할 구분 자세히 보기 <Icon name="arrow" size={16} /></a></p>
+      <p class="more-link"><a href="/exercise-rehab/#postop">수술 후 재활 로드맵 보기 <Icon name="arrow" size={16} /></a> &nbsp;·&nbsp; <a href="/exercise-rehab/#roles">역할 구분 보기 <Icon name="arrow" size={16} /></a></p>
     </div>
   </section>
 
@@ -180,6 +176,9 @@ const pillars = [
   .pillar { display: flex; flex-direction: column; }
   .pillar__en { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-600); }
   .pillar h3 { margin-top: 4px; }
+  .pillar__ex { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .pillar__ex li { position: relative; padding-left: 16px; font-size: 14px; color: var(--ink-2); }
+  .pillar__ex li::before { content: ''; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-600); }
   .pillar__go { margin-top: auto; padding-top: 20px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; color: var(--accent-600); }
 
   .more-link { margin-top: 28px; font-weight: 700; }

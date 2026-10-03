@@ -29,21 +29,24 @@ export const levels: Level[] = [
   },
   {
     id: 'clinical', no: 'Level 2', title: '임상 과정', en: 'Clinical',
-    goal: '부위별 손상을 평가에서 재활까지 이어서 다룹니다.',
+    goal: '부위별 근골격계 질환과 수술 후 상태를 평가에서 재활까지 이어서 다룹니다.',
     modules: [
       { name: '어깨', track: 'both' },
       { name: '무릎 (전방십자인대 등)', track: 'both' },
       { name: '발목 · 발', track: 'both' },
       { name: '요추 · 골반 · 고관절', track: 'both' },
+      { name: '수술 후 재활 (인공관절 · 십자인대 · 회전근개 · 척추)', track: 'A' },
+      { name: '근골격계 만성 질환의 운동 처방', track: 'both' },
       { name: '신경근 조절과 통증과학', track: 'A' },
       { name: '근력 · 파워 훈련의 원리와 적용', track: 'B' },
     ],
   },
   {
     id: 'return', no: 'Level 3', title: '복귀 과정', en: 'Return to Sport',
-    goal: '재활이 현장 복귀로 이어지도록 기준과 협업 방식을 배웁니다.',
+    goal: '재활이 일상·직장·스포츠 복귀로 이어지도록 기준과 협업 방식을 배웁니다.',
     modules: [
       { name: '기능 검사와 복귀 기준', track: 'both' },
+      { name: '의료진 승인 이후의 운동 지도', track: 'B' },
       { name: '부하 · 워크로드 관리', track: 'both' },
       { name: '심리적 준비도와 선수 교육', track: 'both' },
       { name: '공유 의사결정과 다학제 협업', track: 'both' },
