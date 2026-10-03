@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import Glossary from '../components/Glossary.astro';
+import { benchmarks, nameNotice, rtsCitation } from '../data/framework';
+---
+<Base title="자료실" description="운동재활 용어집과 학회가 참고한 국내외 기준(BASRaT, IFSPT, NSCA, ACSM 등), 핵심 참고문헌을 한곳에 모았습니다.">
+  <PageHero eyebrow="Resources" title="자료실" desc="운동재활 용어집, 학회가 참고한 국내외 기준, 핵심 참고문헌을 모았습니다." />
+
+  <nav class="subnav">
+    <div class="container">
+      <a href="#glossary">용어집</a>
+      <a href="#benchmarks">참고 기준</a>
+      <a href="#references">참고문헌</a>
+    </div>
+  </nav>
+
+  <section class="section" id="glossary">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Glossary</span>
+        <h2 class="h-section">운동재활 용어집</h2>
+        <p class="lead">현장에서 자주 쓰이지만 직종마다 다르게 쓰이는 용어를 같은 언어로 정리했습니다.</p>
+      </div>
+      <Glossary />
+    </div>
+  </section>
+
+  <section class="section section--soft" id="benchmarks">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Benchmarks</span>
+        <h2 class="h-section">학회가 배운 국내외 기준</h2>
+        <p class="lead">영국의 BASRaT를 비롯해 해외 직능단체와 국내 단체의 구조를 살펴보고, 우리 학회에 적용할 점을 정리했습니다. 각 기관의 공식 자료에 적힌 내용만 옮겼으며, 자세한 내용은 출처에서 확인할 수 있습니다.</p>
+      </div>
+      <div class="bms">
+        {benchmarks.map((b) => (
+          <article class="bmx reveal">
+            <div class="bmx__head">
+              <div>
+                <h3>{b.org}</h3>
+                <small>{b.full}</small>
+              </div>
+              <span class="tag tag--navy">{b.country}</span>
+            </div>
+            <p class="bmx__what">{b.what}</p>
+            <div class="bmx__cols">
+              <div>
+                <h4>배운 점</h4>
+                <ul>{b.learn.map((l) => <li>{l}</li>)}</ul>
+              </div>
+              <div class="bmx__apply">
+                <h4>학회에 적용</h4>
+                <p>{b.apply}</p>
+              </div>
+            </div>
+            {b.url && <a class="bmx__src" href={b.url} target="_blank" rel="noopener noreferrer">공식 사이트 <Icon name="external" size={15} /></a>}
+          </article>
+        ))}
+      </div>
+      <p class="notice">{nameNotice}</p>
+    </div>
+  </section>
+
+  <section class="section" id="references">
+    <div class="container narrow">
+      <div class="section-head">
+        <span class="eyebrow">References</span>
+        <h2 class="h-section">핵심 참고문헌</h2>
+      </div>
+      <ol class="refs">
+        <li>
+          <p>{rtsCitation.text}</p>
+          <a href={rtsCitation.doi} target="_blank" rel="noopener noreferrer">{rtsCitation.doi} <Icon name="external" size={14} /></a>
+        </li>
+      </ol>
+      <p class="refs__note">참고문헌은 자료가 확정되는 대로 계속 추가합니다.</p>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .bms { display: flex; flex-direction: column; gap: 16px; }
+  .bmx { padding: 30px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .bmx__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .bmx__head h3 { font-size: 24px; font-weight: 800; color: var(--navy-900); }
+  .bmx__head small { display: block; margin-top: 2px; color: var(--ink-3); font-size: 13.5px; }
+  .bmx__what { margin-top: 16px; color: var(--ink-2); line-height: 1.75; }
+  .bmx__cols { margin-top: 20px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+  .bmx h4 { font-size: 13px; font-weight: 800; letter-spacing: .06em; color: var(--accent-600); margin-bottom: 10px; }
+  .bmx ul { display: flex; flex-direction: column; gap: 8px; }
+  .bmx li { position: relative; padding-left: 16px; font-size: 14.5px; color: var(--ink-2); line-height: 1.65; }
+  .bmx li::before { content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-600); }
+  .bmx__apply { padding: 16px 18px; border-radius: var(--radius); background: var(--accent-50); border: 1px solid var(--accent-100); }
+  .bmx__apply p { font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.65; }
+  .bmx__src { margin-top: 18px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--accent-600); }
+  .bmx__src:hover { text-decoration: underline; }
+  @media (max-width: 800px) { .bmx__cols { grid-template-columns: 1fr; } .bmx { padding: 22px; } }
+  .notice { margin-top: 28px; font-size: 13.5px; color: var(--ink-3); }
+
+  .narrow { max-width: 860px; }
+  .refs { counter-reset: r; display: flex; flex-direction: column; gap: 16px; }
+  .refs li { counter-increment: r; position: relative; padding: 20px 22px 20px 54px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+  .refs li::before { content: counter(r); position: absolute; left: 20px; top: 20px; width: 24px; height: 24px; border-radius: 50%; background: var(--navy-900); color: #fff; font-size: 12px; font-weight: 800; display: grid; place-items: center; }
+  .refs p { font-size: 15px; color: var(--ink-2); line-height: 1.7; }
+  .refs a { margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--accent-600); word-break: break-all; }
+  .refs__note { margin-top: 18px; font-size: 13.5px; color: var(--ink-3); }
+</style>

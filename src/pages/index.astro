@@ -1,0 +1,213 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import RtsExplorer from '../components/RtsExplorer.astro';
+import PartnerFlow from '../components/PartnerFlow.astro';
+import { site, parent, partner } from '../data/site';
+import { competencies, benchmarks } from '../data/framework';
+import { levels, programStatus } from '../data/education';
+
+const parentStat = parent.status === 'approved' ? '대한물리치료사협회 산하' : '대한물리치료사협회 산하 추진';
+const partnerStat = partner.status === 'agreed' ? `${partner.short} MOU` : `${partner.short} MOU 추진`;
+
+const pillars = [
+  { icon: 'clipboard', title: '평가 · 치료', en: 'Assess & Treat', desc: '손상의 원인과 상태를 정확히 평가하고, 근거에 따라 치료적 중재를 선택합니다.', href: '/exercise-rehab/#competency' },
+  { icon: 'dumbbell', title: '운동재활', en: 'Rehabilitate', desc: '가동범위에서 근력, 신경근 조절, 기능 동작으로 이어지는 단계별 운동재활을 설계합니다.', href: '/exercise-rehab/#competency' },
+  { icon: 'flag', title: '복귀 · 퍼포먼스', en: 'Return & Perform', desc: '복귀 시점을 날짜가 아닌 기준으로 판단하고, 컨디셔닝과 현장 복귀로 매끄럽게 잇습니다.', href: '/exercise-rehab/#continuum' },
+];
+---
+<Base>
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <span class="hero__eyebrow">KOREAN ACADEMY OF EXERCISE REHABILITATION</span>
+        <h1 class="h-display">치료에서 복귀까지,<br /><em>근거로 이어지는</em><br />운동재활.</h1>
+        <p class="hero__lead">평가, 치료, 운동재활, 그리고 현장 복귀. 따로 놓여 있던 단계를 하나의 흐름으로 잇는 것이 대한운동재활학회의 일입니다. 근거에 기반한 교육·연구·협력으로 그 기준을 만들어 갑니다.</p>
+        <div class="hero__actions">
+          <a href="/apply/" class="btn btn--primary">회원 가입 · 문의</a>
+          <a href="/exercise-rehab/" class="btn btn--ghost">운동재활 프레임워크 보기</a>
+        </div>
+        <p class="hero__keys">ASSESS · TREAT · REHABILITATE · RETURN</p>
+      </div>
+      <div class="hero__art" aria-hidden="true"><img src="/img/hero-illustration.svg" alt="" width="560" height="520" fetchpriority="high" /></div>
+    </div>
+    <div class="container">
+      <dl class="hero__stats">
+        <div><dt>소속</dt><dd>{parentStat}</dd></div>
+        <div><dt>협력</dt><dd>{partnerStat}</dd></div>
+        <div><dt>교육 기준</dt><dd>복귀 연속체 기반</dd></div>
+        <div><dt>대상</dt><dd>물리치료사 · 운동재활 전문가</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Why KAER</span>
+        <h2 class="h-section">재활은 치료실에서 끝나지 않습니다</h2>
+        <p class="lead">치료가 끝난 뒤 운동으로 이어지지 못하거나, 평가 없이 운동만으로 복귀하는 일이 현장에서는 흔합니다. 우리는 그 사이의 빈 곳을 채웁니다.</p>
+      </div>
+      <div class="grid grid-3">
+        {pillars.map((p) => (
+          <a href={p.href} class="card card--link pillar reveal">
+            <div class="icon-badge"><Icon name={p.icon} /></div>
+            <span class="pillar__en">{p.en}</span>
+            <h3 class="h-card">{p.title}</h3>
+            <p>{p.desc}</p>
+            <span class="pillar__go">자세히 보기 <Icon name="arrow" size={16} /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy" id="continuum">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Return-to-Sport Continuum</span>
+        <h2 class="h-section">복귀는 날짜가 아니라 기준으로 결정합니다</h2>
+        <p class="lead">참여 복귀에서 스포츠 복귀, 퍼포먼스 복귀로 이어지는 연속체를 단계별로 살펴보고, 각 단계에서 확인해야 할 기준을 직접 점검해 보세요.</p>
+      </div>
+      <RtsExplorer />
+      <p class="more-link"><a href="/exercise-rehab/#continuum">복귀 연속체와 역할 구분 자세히 보기 <Icon name="arrow" size={16} /></a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Partnership</span>
+        <h2 class="h-section">함께하면 더 멀리 갑니다</h2>
+        <p class="lead">의료와 운동의 경계를 정확히 지키면서, 그 경계 위에서 협력합니다. 치료는 면허를 가진 물리치료사가, 운동과 컨디셔닝은 스포츠재활사가 맡아 한 흐름으로 이어집니다.</p>
+      </div>
+      <PartnerFlow />
+      <p class="more-link more-link--center"><a href="/partnership/">협력 체계와 역할 구분 보기 <Icon name="arrow" size={16} /></a></p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <span class="eyebrow">Competency Framework</span>
+          <h2 class="h-section">운동재활 전문 역량 프레임워크</h2>
+        </div>
+        <a href="/exercise-rehab/#competency" class="btn btn--line">8개 역량 자세히 보기</a>
+      </div>
+      <div class="grid grid-4 comp">
+        {competencies.map((c, i) => (
+          <article class="comp__card reveal">
+            <span class="comp__no">{String(i + 1).padStart(2, '0')}</span>
+            <div class="comp__icon"><Icon name={c.icon} size={22} /></div>
+            <h3>{c.title}</h3>
+            <small>{c.en}</small>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <span class="eyebrow">Education Roadmap</span>
+          <h2 class="h-section">기초에서 전문까지, 네 단계의 교육</h2>
+        </div>
+        <a href="/education/" class="btn btn--line">교육 · 자격 보기</a>
+      </div>
+      <ol class="road">
+        {levels.map((l, i) => (
+          <li class="road__item reveal">
+            <span class="road__no">{l.no}</span>
+            <h3>{l.title} <small>{l.en}</small></h3>
+            <p>{l.goal}</p>
+          </li>
+        ))}
+      </ol>
+      {programStatus === 'proposal' && <p class="road__note">교육과정은 이사회 확정 전의 안(案)입니다. 시수와 비용은 확정 후 안내합니다.</p>}
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <span class="eyebrow">Learning from the World</span>
+          <h2 class="h-section">국내외 기준에서 배웁니다</h2>
+        </div>
+        <a href="/resources/#benchmarks" class="btn btn--line">참고 기준 전체 보기</a>
+      </div>
+      <div class="grid grid-3">
+        {benchmarks.slice(0, 6).map((b) => (
+          <article class="bm card reveal">
+            <div class="bm__top"><strong>{b.org}</strong><span class="tag tag--navy">{b.country}</span></div>
+            <p>{b.what}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hero { position: relative; background: var(--navy-950); color: #fff; overflow: hidden; }
+  .hero__bg { position: absolute; inset: 0; background: url('/img/hero-bg.svg') center / cover no-repeat; opacity: .9; }
+  .hero__inner { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; padding-top: 84px; padding-bottom: 36px; }
+  .hero__eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--accent-300); margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; color: var(--accent-300); }
+  .hero__lead { margin-top: 24px; max-width: 560px; font-size: 18px; line-height: 1.8; color: rgba(255, 255, 255, .78); }
+  .hero__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__keys { margin-top: 28px; font-size: 12.5px; font-weight: 600; letter-spacing: .18em; color: rgba(255, 255, 255, .5); }
+  .hero__art img { width: 100%; max-width: 560px; height: auto; margin-left: auto; }
+  .hero__stats { position: relative; margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255, 255, 255, .16); }
+  .hero__stats div { padding: 24px 16px 28px 0; }
+  .hero__stats dt { font-size: 13px; color: rgba(255, 255, 255, .55); }
+  .hero__stats dd { margin: 4px 0 0; font-size: 18px; font-weight: 700; line-height: 1.4; }
+  @media (max-width: 900px) {
+    .hero__inner { grid-template-columns: 1fr; padding-top: 56px; }
+    .hero__art { max-width: 300px; margin: 8px auto 0; }
+    .hero__art img { margin: 0 auto; }
+    .hero__stats { grid-template-columns: repeat(2, 1fr); }
+    .hero__stats dd { font-size: 16px; }
+  }
+
+  .pillar { display: flex; flex-direction: column; }
+  .pillar__en { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-600); }
+  .pillar h3 { margin-top: 4px; }
+  .pillar__go { margin-top: auto; padding-top: 20px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; color: var(--accent-600); }
+
+  .more-link { margin-top: 28px; font-weight: 700; }
+  .more-link a { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-300); }
+  .more-link a:hover { text-decoration: underline; }
+  .more-link--center { text-align: center; }
+  .more-link--center a { color: var(--accent-600); }
+
+  .comp__card { position: relative; padding: 26px 24px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+  .comp__no { position: absolute; top: 18px; right: 20px; font-size: 13px; font-weight: 800; color: var(--accent-100); -webkit-text-stroke: 0; color: #e0c9bb; }
+  .comp__icon { width: 46px; height: 46px; border-radius: 13px; background: var(--accent-50); color: var(--accent-600); display: grid; place-items: center; }
+  .comp__card h3 { margin-top: 16px; font-size: 18px; font-weight: 800; color: var(--navy-900); }
+  .comp__card small { display: block; margin-top: 4px; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+  .road { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .road__item { position: relative; padding: 30px 22px 0 0; border-top: 3px solid #e3e8ee; }
+  .road__item::before { content: ''; position: absolute; top: -9px; left: 0; width: 15px; height: 15px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-600); }
+  .road__item:last-child { border-top-color: var(--accent-600); }
+  .road__no { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--accent-600); }
+  .road__item h3 { margin-top: 6px; font-size: 22px; font-weight: 800; color: var(--navy-900); }
+  .road__item h3 small { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--ink-3); }
+  .road__item p { margin-top: 10px; font-size: 15px; color: var(--ink-2); line-height: 1.65; }
+  .road__note { margin-top: 36px; font-size: 13.5px; color: var(--ink-3); }
+  @media (max-width: 900px) { .road { grid-template-columns: repeat(2, 1fr); gap: 36px 24px; } }
+  @media (max-width: 560px) { .road { grid-template-columns: 1fr; } }
+
+  .bm { display: flex; flex-direction: column; }
+  .bm__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .bm__top strong { font-size: 19px; font-weight: 800; color: var(--navy-900); }
+  .bm p { font-size: 14.5px; line-height: 1.7; }
+</style>

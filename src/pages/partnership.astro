@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import PartnerFlow from '../components/PartnerFlow.astro';
+import RoleTable from '../components/RoleTable.astro';
+import { partner, parentLine, partnerLine } from '../data/site';
+
+const areas = [
+  { icon: 'book', title: '공동 교육 · 세미나', desc: '운동재활 교육을 공동으로 기획하고, 임상 트랙과 운동·컨디셔닝 트랙이 서로의 영역을 이해할 수 있는 합동 세션을 추진합니다.' },
+  { icon: 'chart', title: '학술 · 연구 교류', desc: '학술 행사와 연구 결과를 서로 공유하고, 복귀와 재손상 예방에 관한 공동 연구를 추진합니다.' },
+  { icon: 'flag', title: '복귀 프로세스 공동 개발', desc: '평가에서 현장 복귀까지 이어지는 기준과 의사소통 방식을 직종 간 합의로 만들어 갑니다.' },
+  { icon: 'users', title: '현장 정보 · 인력 교류', desc: '팀, 학교, 센터의 사례와 과제를 공유하고 현장과 학계를 잇는 교류의 장을 마련합니다.' },
+];
+const faq = [
+  { q: '대한운동재활학회와 대한스포츠재활사협회는 어떤 관계인가요?', a: `서로 독립된 단체입니다. ${partnerLine}. 두 단체는 직무 범위가 서로 다르기 때문에, 역할을 구분한 채로 교육·학술·현장 연계에서 협력합니다.` },
+  { q: '스포츠재활사도 정회원이 될 수 있나요?', a: '정회원은 물리치료사 면허를 가진 보건의료인입니다. 스포츠재활사와 트레이너 등은 협력회원으로 가입해 교육과 학술 교류에 참여할 수 있습니다.' },
+  { q: '협력회원도 치료 관련 교육을 받을 수 있나요?', a: '협력회원은 운동·컨디셔닝 트랙을 중심으로 참여합니다. 의료행위에 해당하는 영역의 교육과 활동은 면허를 가진 보건의료인을 대상으로 운영하며, 협력회원에게는 포함하지 않습니다.' },
+  { q: '대한물리치료사협회와는 어떤 관계인가요?', a: `${parentLine}입니다. 소속 형태와 승인 사항은 확정되는 대로 이곳에 갱신합니다.` },
+  { q: '이 사이트의 정보로 환자 진료나 복귀 판단을 할 수 있나요?', a: '아닙니다. 사이트의 내용은 교육·학술 정보입니다. 개별 환자와 선수에 대한 진단, 치료, 복귀 판단은 면허를 가진 의료진과 다학제 팀의 평가에 따라야 합니다.' },
+];
+---
+<Base title="협력 · MOU" description="대한운동재활학회와 대한스포츠재활사협회의 협력 체계. 치료는 물리치료사가, 운동·컨디셔닝은 스포츠재활사가 맡아 현장 복귀까지 한 흐름으로 잇습니다.">
+  <PageHero eyebrow="Partnership" title="협력 · MOU" desc="의료와 운동의 경계를 지키면서, 그 경계 위에서 협력합니다." />
+
+  <nav class="subnav">
+    <div class="container">
+      <a href="#model">협력 모델</a>
+      <a href="#areas">협력 분야</a>
+      <a href="#roles">역할 구분</a>
+      <a href="#faq">자주 묻는 질문</a>
+    </div>
+  </nav>
+
+  <section class="section" id="model">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Partnership Model</span>
+        <h2 class="h-section">한 흐름으로 이어지는 협력</h2>
+        <p class="lead">
+          {parentLine}로서 의료·치료 영역을 맡고, 운동·컨디셔닝 영역은 {partner.name}와의 업무협약을 바탕으로 협력합니다. 환자와 선수는 하나의 연속된 과정에서 필요한 전문가를 만나게 됩니다.
+        </p>
+      </div>
+      <PartnerFlow />
+      {partner.signedDate && <p class="signed">업무협약 체결일 · {partner.signedDate}</p>}
+    </div>
+  </section>
+
+  <section class="section section--soft" id="areas">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Areas of Cooperation</span>
+        <h2 class="h-section">협력 분야</h2>
+        <p class="lead">구체적인 사업은 협약의 내용과 두 단체의 논의에 따라 확정되며, 확정되는 대로 이 페이지에 갱신합니다.</p>
+      </div>
+      <div class="grid grid-2">
+        {areas.map((a) => (
+          <article class="area reveal">
+            <div class="icon-badge"><Icon name={a.icon} /></div>
+            <h3>{a.title}</h3>
+            <p>{a.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="roles">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Role Delineation</span>
+        <h2 class="h-section">직종별 역할 구분</h2>
+        <p class="lead">협력은 역할이 분명할 때 가장 안전합니다. 학회가 지향하는 역할 구분의 개념도입니다.</p>
+      </div>
+      <RoleTable />
+    </div>
+  </section>
+
+  <section class="section section--soft" id="faq">
+    <div class="container narrow">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="h-section">자주 묻는 질문</h2>
+      </div>
+      <div class="faq">
+        {faq.map((f) => (
+          <details class="acc">
+            <summary>{f.q}</summary>
+            <div class="acc__body">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .signed { margin-top: 24px; text-align: center; font-weight: 700; color: var(--accent-600); }
+  .area { padding: 30px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .area h3 { font-size: 21px; font-weight: 800; color: var(--navy-900); }
+  .area p { margin-top: 10px; color: var(--ink-2); line-height: 1.75; }
+  .narrow { max-width: 860px; }
+</style>

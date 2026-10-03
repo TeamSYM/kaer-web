@@ -1,0 +1,46 @@
+---
+import { roleCols, roleRows, roleNote } from '../data/framework';
+const label = { '●': '주도 · 수행', '○': '참여 · 협력', '—': '해당 없음' } as const;
+---
+<div class="rt">
+  <div class="tbl-wrap">
+    <table class="tbl rt__tbl">
+      <caption class="sr-only">직종별 역할 구분표</caption>
+      <thead>
+        <tr><th scope="col">활동 영역</th>{roleCols.map((c) => <th scope="col">{c}</th>)}</tr>
+      </thead>
+      <tbody>
+        {roleRows.map((r) => (
+          <tr>
+            <th scope="row"><span>{r.act}</span>{r.sub && <small>{r.sub}</small>}</th>
+            {r.v.map((v) => (
+              <td><span class={`dot dot--${v === '●' ? 'a' : v === '○' ? 'b' : 'c'}`} role="img" aria-label={label[v]}>{v}</span></td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <ul class="rt__legend">
+    <li><span class="dot dot--a" aria-hidden="true">●</span> 주도 · 수행</li>
+    <li><span class="dot dot--b" aria-hidden="true">○</span> 참여 · 협력</li>
+    <li><span class="dot dot--c" aria-hidden="true">—</span> 해당 없음</li>
+  </ul>
+  <p class="note-box"><strong>안내.</strong> {roleNote}</p>
+</div>
+
+<style>
+  .rt__tbl { min-width: 640px; }
+  .rt__tbl th[scope='row'] { text-align: left; font-weight: 600; color: var(--ink); background: #fff; }
+  .rt__tbl th[scope='row'] span { display: block; }
+  .rt__tbl th[scope='row'] small { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .rt__tbl thead th { font-size: 14px; }
+  .rt__tbl thead th:first-child { text-align: left; }
+  .dot { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-size: 16px; font-weight: 800; }
+  .dot--a { background: var(--accent-600); color: #fff; }
+  .dot--b { background: var(--accent-50); color: var(--accent-600); border: 1.5px solid var(--accent-100); }
+  .dot--c { color: var(--ink-3); font-weight: 400; }
+  .rt__legend { margin: 16px 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; color: var(--ink-2); }
+  .rt__legend li { display: flex; align-items: center; gap: 8px; }
+  .rt__legend .dot { width: 24px; height: 24px; font-size: 13px; }
+</style>

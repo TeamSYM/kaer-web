@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 520" role="img" aria-label="평가에서 치료, 재활, 복귀로 이어지는 운동재활 경로">
+<defs>
+  <linearGradient id="path" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5eead4"/><stop offset=".55" stop-color="#fdba74"/><stop offset="1" stop-color="#ea580c"/></linearGradient>
+  <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ea580c" stop-opacity=".55"/><stop offset="1" stop-color="#ea580c" stop-opacity="0"/></radialGradient>
+</defs>
+<g fill="none" stroke="#ffffff" stroke-opacity=".09">
+  <circle cx="310" cy="270" r="90"/><circle cx="310" cy="270" r="160"/><circle cx="310" cy="270" r="230"/><circle cx="310" cy="270" r="300"/>
+</g>
+<g stroke="#ffffff" stroke-opacity=".12" stroke-width="1"><path d="M0 470h560M0 400h560M0 330h560" stroke-dasharray="2 8"/></g>
+<path d="M44 436 C150 438 196 360 262 304 S392 190 470 118" fill="none" stroke="url(#path)" stroke-width="5" stroke-linecap="round"/>
+<g>
+  <circle cx="44" cy="436" r="9" fill="#5eead4"/><circle cx="44" cy="436" r="18" fill="none" stroke="#5eead4" stroke-opacity=".35"/>
+  <circle cx="176" cy="392" r="9" fill="#a7f3d0"/><circle cx="176" cy="392" r="18" fill="none" stroke="#a7f3d0" stroke-opacity=".35"/>
+  <circle cx="300" cy="278" r="9" fill="#fdba74"/><circle cx="300" cy="278" r="18" fill="none" stroke="#fdba74" stroke-opacity=".35"/>
+</g>
+<g font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#ffffff" fill-opacity=".9">
+  <text x="44" y="474">ASSESS</text><text x="150" y="430">TREAT</text><text x="270" y="316">REHAB</text>
+</g>
+<circle cx="470" cy="118" r="70" fill="url(#glow)"/>
+<g stroke="#ffffff" stroke-opacity=".28" stroke-width="3" stroke-linecap="round"><path d="M360 96h46M340 118h66M372 140h34"/></g>
+<g fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="476" cy="62" r="13" fill="#ffffff" stroke="none"/>
+  <path d="M472 84 L456 134"/>
+  <path d="M470 94 L498 112 L514 96"/>
+  <path d="M470 94 L444 108 L430 92"/>
+  <path d="M456 134 L482 156 L476 190"/>
+  <path d="M456 134 L432 166 L404 160"/>
+</g>
+<g fill="#ea580c"><circle cx="470" cy="94" r="6"/><circle cx="456" cy="134" r="6"/><circle cx="482" cy="156" r="5"/><circle cx="432" cy="166" r="5"/><circle cx="498" cy="112" r="5"/><circle cx="444" cy="108" r="5"/></g>
+<g font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="13" font-weight="800" letter-spacing="2" fill="#fdba74"><text x="430" y="226">RETURN</text></g>
+</svg>

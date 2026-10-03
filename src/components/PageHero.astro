@@ -1,0 +1,20 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  desc?: string;
+}
+const { eyebrow, title, desc } = Astro.props;
+---
+<section class="page-hero">
+  <div class="page-hero__bg"></div>
+  <div class="container">
+    <nav class="crumbs" aria-label="현재 위치"><a href="/">홈</a> <span aria-hidden="true">/</span> {title}</nav>
+    <span class="eyebrow">{eyebrow}</span>
+    <h1>{title}</h1>
+    {desc && <p>{desc}</p>}
+  </div>
+</section>
+<style>
+  .page-hero__bg { background-image: url('/img/hero-bg.svg'); opacity: 1; }
+</style>

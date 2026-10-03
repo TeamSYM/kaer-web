@@ -1,0 +1,77 @@
+---
+import { site, parent, partner, parentLine, partnerLine } from '../data/site';
+---
+<div class="pf">
+  <div class="pf__rel">
+    <article class="pf__node">
+      <span class="pf__tag">소속</span>
+      <div class="pf__logo"><img src={parent.logo} alt={`${parent.name} 로고`} loading="lazy" /></div>
+      <h3>{parent.short}</h3>
+      <p>{parentLine}</p>
+    </article>
+
+    <div class="pf__link pf__link--l" aria-hidden="true"><span>소속</span><i></i></div>
+
+    <article class="pf__node pf__node--me">
+      <div class="pf__logo pf__logo--me"><img src="/img/emblem.png" alt="" width="72" height="72" /></div>
+      <h3>{site.name}</h3>
+      <p>{site.short} · 근거 기반 운동재활</p>
+    </article>
+
+    <div class="pf__link pf__link--r" aria-hidden="true"><span>MOU</span><i></i></div>
+
+    <article class="pf__node">
+      <span class="pf__tag pf__tag--mou">업무협약</span>
+      <div class="pf__logo">
+        {partner.logo ? <img src={partner.logo} alt={`${partner.name} 로고`} loading="lazy" /> : <span class="pf__wordmark">{partner.name}</span>}
+      </div>
+      <h3>{partner.short}</h3>
+      <p>{partnerLine}</p>
+    </article>
+  </div>
+
+  <div class="pf__cont" aria-label="협력 연속체">
+    <p class="pf__cont-title">치료에서 현장 복귀까지, 한 흐름으로 협력합니다</p>
+    <div class="pf__bar">
+      <div class="pf__seg pf__seg--a"><strong>평가 · 치료 · 재활</strong><span>{site.name}</span><small>물리치료사 중심</small></div>
+      <div class="pf__seg pf__seg--m"><strong>운동재활 · 복귀 훈련</strong><span>공동 협력 영역</span><small>복귀 기준과 프로세스 공유</small></div>
+      <div class="pf__seg pf__seg--b"><strong>컨디셔닝 · 현장 복귀</strong><span>{partner.name}</span><small>운동 · 컨디셔닝 중심</small></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pf__rel { display: grid; grid-template-columns: 1fr 70px 1.15fr 70px 1fr; align-items: stretch; gap: 0; }
+  .pf__node { position: relative; text-align: center; padding: 34px 20px 26px; border-radius: var(--radius-lg); background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; }
+  .pf__node--me { background: var(--navy-900); border-color: var(--navy-900); color: #fff; box-shadow: var(--shadow-lg); }
+  .pf__tag { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); padding: 3px 12px; border-radius: 999px; font-size: 12px; font-weight: 800; background: #e8eef6; color: var(--navy-700); white-space: nowrap; }
+  .pf__tag--mou { background: var(--accent-50); color: var(--accent-600); }
+  .pf__logo { margin-top: 10px; width: 100%; min-height: 76px; display: grid; place-items: center; }
+  .pf__logo img { max-height: 54px; width: auto; max-width: 100%; object-fit: contain; }
+  .pf__logo--me img { max-height: 72px; }
+  .pf__wordmark { font-size: 20px; font-weight: 800; letter-spacing: -0.04em; color: var(--navy-900); padding: 10px 14px; border: 1.5px solid var(--navy-900); border-radius: 12px; line-height: 1.3; }
+  .pf__node h3 { margin-top: 10px; font-size: 19px; font-weight: 800; }
+  .pf__node p { margin-top: 6px; font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+  .pf__node--me p { color: rgba(255, 255, 255, .72); }
+  .pf__link { position: relative; display: grid; place-items: center; }
+  .pf__link i { display: block; width: 100%; height: 3px; background: repeating-linear-gradient(90deg, var(--accent-500) 0 8px, transparent 8px 14px); }
+  .pf__link span { position: absolute; top: calc(50% - 30px); font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--accent-600); }
+  .pf__cont { margin-top: 44px; }
+  .pf__cont-title { text-align: center; font-size: 15px; font-weight: 700; color: var(--ink-2); }
+  .pf__bar { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr 1fr; border-radius: var(--radius-lg); overflow: hidden; }
+  .pf__seg { padding: 24px 22px; color: #fff; display: flex; flex-direction: column; gap: 4px; }
+  .pf__seg strong { font-size: 17px; font-weight: 800; }
+  .pf__seg span { font-size: 14px; font-weight: 700; opacity: .92; }
+  .pf__seg small { font-size: 13px; opacity: .75; }
+  .pf__seg--a { background: var(--navy-800); }
+  .pf__seg--m { background: linear-gradient(90deg, var(--navy-800), var(--accent-600)); padding-left: 40px; }
+  .pf__seg--b { background: var(--accent-600); }
+  @media (max-width: 900px) {
+    .pf__rel { grid-template-columns: 1fr; gap: 10px; }
+    .pf__link { height: 46px; }
+    .pf__link i { width: 3px; height: 100%; background: repeating-linear-gradient(180deg, var(--accent-500) 0 8px, transparent 8px 14px); }
+    .pf__link span { top: 50%; transform: translate(26px, -50%); }
+    .pf__bar { grid-template-columns: 1fr; }
+    .pf__seg--m { padding-left: 22px; background: linear-gradient(180deg, var(--navy-800), var(--accent-600)); }
+  }
+</style>

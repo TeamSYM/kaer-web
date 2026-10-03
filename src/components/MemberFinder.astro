@@ -1,0 +1,58 @@
+---
+import { finder, members } from '../data/education';
+const typeLabel: Record<string, string> = { regular: '정회원 가입', associate: '준회원 가입', partner: '협력회원 가입', org: '기관회원 · 제휴' };
+---
+<div class="finder" data-finder>
+  <h3>나에게 맞는 회원 유형 찾기</h3>
+  <p class="finder__q">나는 어떤 분인가요?</p>
+  <div class="finder__opts" role="radiogroup" aria-label="회원 유형 찾기">
+    {finder.map((f, i) => (
+      <label class="finder__opt">
+        <input type="radio" name="finder" value={f.result} />
+        <span>{f.label}</span>
+      </label>
+    ))}
+  </div>
+  {members.map((m) => (
+    <div class="finder__res" data-res={m.id} hidden>
+      <span class="tag">추천 회원 유형</span>
+      <h4>{m.title} <small>{m.en}</small></h4>
+      <p>{m.who}</p>
+      <ul>{m.can.map((c) => <li>{c}</li>)}</ul>
+      {m.cannot && <p class="finder__cannot">{m.cannot}</p>}
+      <a class="btn btn--primary btn--sm" href={`/apply/?type=${m.id}`}>{typeLabel[m.id]} 문의하기</a>
+    </div>
+  ))}
+</div>
+
+<style>
+  .finder { background: var(--navy-900); color: #fff; border-radius: var(--radius-lg); padding: 32px; }
+  .finder h3 { font-size: 22px; font-weight: 800; }
+  .finder__q { margin-top: 6px; color: rgba(255, 255, 255, .7); }
+  .finder__opts { margin-top: 18px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .finder__opt { position: relative; display: block; cursor: pointer; }
+  .finder__opt input { position: absolute; opacity: 0; inset: 0; }
+  .finder__opt span { display: block; padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .05); font-weight: 600; font-size: 15px; transition: background .2s, border-color .2s; }
+  .finder__opt:hover span { background: rgba(255, 255, 255, .1); }
+  .finder__opt input:checked + span { background: var(--accent-600); border-color: var(--accent-600); }
+  .finder__opt input:focus-visible + span { outline: 3px solid var(--accent-300); outline-offset: 2px; }
+  .finder__res { margin-top: 22px; padding: 24px; border-radius: var(--radius); background: #fff; color: var(--ink); }
+  .finder__res h4 { margin-top: 10px; font-size: 24px; font-weight: 800; color: var(--navy-900); }
+  .finder__res h4 small { margin-left: 8px; font-size: 14px; font-weight: 600; color: var(--ink-3); }
+  .finder__res > p { margin-top: 4px; color: var(--ink-2); }
+  .finder__res ul { margin: 14px 0 18px; display: flex; flex-direction: column; gap: 6px; }
+  .finder__res li { position: relative; padding-left: 18px; font-size: 15px; color: var(--ink-2); }
+  .finder__res li::before { content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-600); }
+  .finder__cannot { margin: 0 0 16px; padding: 10px 14px; border-radius: 10px; background: var(--bg-soft); font-size: 13.5px !important; color: var(--ink-2); }
+  @media (max-width: 640px) { .finder { padding: 22px 18px; } .finder__opts { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-finder]').forEach((root) => {
+    root.querySelectorAll<HTMLInputElement>('input[name=finder]').forEach((r) =>
+      r.addEventListener('change', () => {
+        root.querySelectorAll<HTMLElement>('[data-res]').forEach((el) => (el.hidden = el.dataset.res !== r.value));
+      }),
+    );
+  });
+</script>

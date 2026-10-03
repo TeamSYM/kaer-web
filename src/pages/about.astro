@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import PartnerFlow from '../components/PartnerFlow.astro';
+import { site, parentLine } from '../data/site';
+import { nameNotice } from '../data/framework';
+
+const missions = [
+  { icon: 'book', title: '교육', desc: '근거에 기반한 운동재활 교육과정을 개발하고, 임상과 현장에서 바로 쓰이는 역량을 키웁니다.' },
+  { icon: 'chart', title: '연구', desc: '현장의 질문을 연구로 발전시키고, 결과를 학술 행사와 자료로 나눕니다.' },
+  { icon: 'handshake', title: '협력', desc: '의사, 물리치료사, 스포츠재활사, 트레이너가 한 팀으로 일하는 협력 모델을 만듭니다.' },
+  { icon: 'shield', title: '윤리', desc: '환자와 선수의 안전, 그리고 직종별 직무 범위를 존중하는 실무 기준을 세웁니다.' },
+];
+const values = [
+  { en: 'Evidence', ko: '근거', desc: '경험과 직관을 존중하되, 판단은 근거와 측정으로 뒷받침합니다.' },
+  { en: 'Continuity', ko: '연속성', desc: '평가와 치료, 운동재활, 복귀를 끊김 없는 하나의 흐름으로 봅니다.' },
+  { en: 'Boundaries', ko: '경계의 존중', desc: '의료와 운동의 경계를 분명히 하고, 그 위에서 협력합니다.' },
+  { en: 'Collaboration', ko: '협력', desc: '혼자가 아니라 팀으로 환자와 선수의 복귀를 책임집니다.' },
+];
+const activities = [
+  { title: '교육 · 자격', desc: '기초에서 전문까지 단계별 교육과정과 평점(CPD) 제도를 운영합니다.', href: '/education/' },
+  { title: '학술 · 연구', desc: '학술대회, 임상 사례 컨퍼런스, 공동 연구를 추진합니다.', href: '/exercise-rehab/' },
+  { title: '현장 연계', desc: '팀·학교·재활센터와 복귀 프로세스를 함께 만들고 점검합니다.', href: '/partnership/' },
+  { title: '국제 교류', desc: '해외 스포츠재활·스포츠물리치료 기준과 연구를 학습하고 교류합니다.', href: '/resources/#benchmarks' },
+];
+const committees = ['교육위원회', '학술위원회', '대외협력위원회', '윤리위원회', '국제교류위원회'];
+---
+<Base title="학회 소개" description="대한운동재활학회의 비전과 미션, 핵심 가치, 학회가 하는 일과 운영 체계를 소개합니다. 치료에서 복귀까지 근거로 잇는 운동재활 학술단체입니다.">
+  <PageHero eyebrow="About Us" title="학회 소개" desc="치료에서 복귀까지, 한국 운동재활의 기준을 근거로 만들어 가는 학술단체입니다." />
+
+  <nav class="subnav">
+    <div class="container">
+      <a href="#vision">비전 · 미션</a>
+      <a href="#values">핵심 가치</a>
+      <a href="#work">학회가 하는 일</a>
+      <a href="#org">운영 체계</a>
+      <a href="#affiliation">소속 · 협력</a>
+    </div>
+  </nav>
+
+  <section class="section" id="vision">
+    <div class="container split">
+      <div class="reveal">
+        <span class="eyebrow">Vision</span>
+        <h2 class="h-section">치료에서 복귀까지,<br />한국 운동재활의 기준을 만듭니다</h2>
+        <div class="prose" style="margin-top:28px">
+          <p>
+            운동재활은 치료와 운동, 그리고 현장 복귀가 만나는 자리입니다. 그런데 현장에서는 치료와 운동이 서로 다른 언어로 이야기되고, 복귀의 시점이 경험이나 일정에 따라 정해지는 일이 많습니다.
+          </p>
+          <p>
+            {site.name}는 평가에서 복귀까지의 흐름을 하나의 체계로 정리하고, 직종마다 다른 역할과 한계를 분명히 하여 협력의 기준을 세우려 합니다. 국내외의 스포츠재활·스포츠물리치료 기준을 학습해 우리 현장에 맞게 풀어 쓰는 것이 출발점입니다.
+          </p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="mission-grid">
+          {missions.map((m) => (
+            <article class="mission">
+              <div class="icon-badge"><Icon name={m.icon} /></div>
+              <h3>{m.title}</h3>
+              <p>{m.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy" id="values">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Core Values</span>
+        <h2 class="h-section">우리가 지키는 네 가지 가치</h2>
+      </div>
+      <div class="grid grid-4">
+        {values.map((v) => (
+          <article class="val reveal">
+            <span class="val__en">{v.en}</span>
+            <h3>{v.ko}</h3>
+            <p>{v.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What We Do</span>
+        <h2 class="h-section">학회가 하는 일</h2>
+        <p class="lead">출범 단계에서 우선 추진하는 네 가지 사업입니다.</p>
+      </div>
+      <div class="grid grid-4">
+        {activities.map((a, i) => (
+          <a href={a.href} class="card card--link act reveal">
+            <span class="act__no">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="h-card">{a.title}</h3>
+            <p>{a.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="org">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Organization</span>
+        <h2 class="h-section">운영 체계</h2>
+        <p class="lead">총회와 이사회 아래 다섯 개 위원회를 두고, 교육·학술·협력·윤리·국제교류를 나누어 맡는 구조를 지향합니다. 임원 명단은 확정 후 게재합니다.</p>
+      </div>
+      <div class="org reveal">
+        <div class="org__top">총회</div>
+        <div class="org__line" aria-hidden="true"></div>
+        <div class="org__top org__top--b">이사회 · 학회장</div>
+        <div class="org__line" aria-hidden="true"></div>
+        <ul class="org__cm">
+          {committees.map((c) => <li>{c}</li>)}
+        </ul>
+        <div class="org__line org__line--short" aria-hidden="true"></div>
+        <div class="org__top org__top--c">사무국</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="affiliation">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Affiliation</span>
+        <h2 class="h-section">소속과 협력</h2>
+        <p class="lead">{parentLine}이며, 운동·컨디셔닝 영역은 대한스포츠재활사협회와의 협약을 바탕으로 협력합니다.</p>
+      </div>
+      <PartnerFlow />
+      <p class="notice">{nameNotice}</p>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .mission { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+  .mission .icon-badge { margin-bottom: 16px; }
+  .mission h3 { font-size: 19px; font-weight: 800; color: var(--navy-900); }
+  .mission p { margin-top: 8px; font-size: 14.5px; color: var(--ink-2); line-height: 1.65; }
+  @media (max-width: 560px) { .mission-grid { grid-template-columns: 1fr; } }
+
+  .val { padding: 28px 24px; border-radius: var(--radius-lg); background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .12); }
+  .val__en { font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-300); }
+  .val h3 { margin-top: 10px; font-size: 24px; font-weight: 800; }
+  .val p { margin-top: 10px; font-size: 15px; color: rgba(255, 255, 255, .72); line-height: 1.7; }
+
+  .act { display: flex; flex-direction: column; }
+  .act__no { font-size: 32px; font-weight: 800; letter-spacing: -0.04em; color: var(--accent-600); line-height: 1; }
+  .act h3 { margin-top: 18px; }
+
+  .org { display: flex; flex-direction: column; align-items: center; }
+  .org__top { padding: 14px 40px; border-radius: 14px; background: var(--navy-900); color: #fff; font-weight: 800; font-size: 17px; }
+  .org__top--b { background: var(--accent-600); }
+  .org__top--c { background: #fff; color: var(--navy-900); border: 1.5px solid var(--navy-900); }
+  .org__line { width: 2px; height: 28px; background: #c4d3e2; }
+  .org__line--short { height: 22px; }
+  .org__cm { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; width: 100%; max-width: 980px; }
+  .org__cm li { text-align: center; padding: 18px 10px; border-radius: 14px; background: #fff; border: 1px solid var(--line); font-weight: 700; color: var(--navy-900); }
+  @media (max-width: 800px) { .org__cm { grid-template-columns: repeat(2, 1fr); } }
+
+  .notice { margin-top: 32px; text-align: center; font-size: 13.5px; color: var(--ink-3); }
+</style>

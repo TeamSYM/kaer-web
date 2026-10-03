@@ -1,0 +1,82 @@
+---
+import { terms, groups } from '../data/glossary';
+---
+<div class="gl" data-gl>
+  <div class="gl__bar">
+    <div class="gl__search">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg>
+      <input type="search" placeholder="용어 검색 (예: ROM, 워크로드, 복귀)" aria-label="용어 검색" data-q />
+    </div>
+    <div class="gl__chips" role="group" aria-label="분류">
+      <button type="button" class="chip is-on" data-g="">전체 <span>{terms.length}</span></button>
+      {groups.map((g) => <button type="button" class="chip" data-g={g}>{g} <span>{terms.filter((t) => t.group === g).length}</span></button>)}
+    </div>
+  </div>
+  <p class="gl__count" data-count aria-live="polite">{terms.length}개 용어</p>
+  <ul class="gl__list">
+    {terms.map((t) => (
+      <li class="gl__item" data-g={t.group} data-text={`${t.ko} ${t.en} ${t.def}`.toLowerCase()}>
+        <div class="gl__top"><strong>{t.ko}</strong><span class="gl__grp">{t.group}</span></div>
+        <em>{t.en}</em>
+        <p>{t.def}</p>
+      </li>
+    ))}
+  </ul>
+  <p class="gl__empty" data-empty hidden>일치하는 용어가 없습니다. 다른 검색어를 입력해 보세요.</p>
+  <p class="gl__fine">용어의 정의는 교육 목적으로 간단히 풀어 쓴 것이며, 개별 사례의 판단은 전문가의 평가에 따릅니다.</p>
+</div>
+
+<style>
+  .gl__bar { display: flex; flex-direction: column; gap: 16px; }
+  .gl__search { display: flex; align-items: center; gap: 12px; padding: 0 18px; height: 56px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink-3); }
+  .gl__search:focus-within { border-color: var(--accent-600); box-shadow: 0 0 0 4px rgba(194, 65, 12, .12); }
+  .gl__search input { flex: 1; border: 0; outline: 0; font: inherit; font-size: 17px; background: transparent; color: var(--ink); }
+  .gl__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: inherit; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--ink-2); cursor: pointer; }
+  .chip span { margin-left: 4px; color: var(--ink-3); font-weight: 500; }
+  .chip:hover { border-color: var(--navy-900); }
+  .chip.is-on { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+  .chip.is-on span { color: rgba(255, 255, 255, .7); }
+  .gl__count { margin-top: 22px; font-size: 14px; font-weight: 700; color: var(--ink-3); }
+  .gl__list { margin-top: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .gl__item { padding: 22px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+  .gl__item[hidden] { display: none; }
+  .gl__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .gl__top strong { font-size: 18px; font-weight: 800; color: var(--navy-900); }
+  .gl__grp { flex-shrink: 0; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--accent-50); color: var(--accent-600); }
+  .gl__item em { display: block; margin-top: 2px; font-style: normal; font-size: 13.5px; color: var(--ink-3); }
+  .gl__item p { margin-top: 10px; font-size: 15px; color: var(--ink-2); line-height: 1.7; }
+  .gl__empty { margin-top: 28px; text-align: center; color: var(--ink-3); }
+  .gl__fine { margin-top: 28px; font-size: 13px; color: var(--ink-3); }
+  @media (max-width: 760px) { .gl__list { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gl]').forEach((root) => {
+    const q = root.querySelector<HTMLInputElement>('[data-q]')!;
+    const items = [...root.querySelectorAll<HTMLElement>('.gl__item')];
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.chip')];
+    const count = root.querySelector<HTMLElement>('[data-count]')!;
+    const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+    let group = '';
+    const run = () => {
+      const kw = q.value.trim().toLowerCase();
+      let n = 0;
+      items.forEach((el) => {
+        const ok = (!group || el.dataset.g === group) && (!kw || (el.dataset.text ?? '').includes(kw));
+        el.hidden = !ok;
+        if (ok) n++;
+      });
+      count.textContent = `${n}개 용어`;
+      empty.hidden = n > 0;
+    };
+    q.addEventListener('input', run);
+    chips.forEach((c) =>
+      c.addEventListener('click', () => {
+        group = c.dataset.g ?? '';
+        chips.forEach((x) => x.classList.toggle('is-on', x === c));
+        run();
+      }),
+    );
+  });
+</script>

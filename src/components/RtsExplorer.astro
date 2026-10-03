@@ -1,0 +1,131 @@
+---
+import { phases, rtsNote, rtsCitation } from '../data/framework';
+---
+<div class="rts" data-rts>
+  <div class="rts__steps" role="tablist" aria-label="복귀 연속체 단계">
+    {phases.map((p, i) => (
+      <button type="button" role="tab" class="rts__step" id={`rts-tab-${i}`} aria-controls={`rts-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-i={i}>
+        <span class="rts__no">{p.no}</span>
+        <strong>{p.ko}</strong>
+        <em>{p.en}</em>
+        <span class="rts__done" aria-hidden="true">✓</span>
+      </button>
+    ))}
+  </div>
+
+  {phases.map((p, i) => {
+    const total = p.domains.reduce((n, d) => n + d.items.length, 0);
+    return (
+      <section class="rts__panel" role="tabpanel" id={`rts-panel-${i}`} aria-labelledby={`rts-tab-${i}`} hidden={i !== 0} data-panel={i} data-total={total}>
+        <div class="rts__top">
+          <div>
+            <h3>{p.ko} <small>{p.en}</small></h3>
+            <p class="rts__goal">{p.goal}</p>
+          </div>
+          <div class="rts__lead"><span>주도 역할</span><p>{p.lead}</p></div>
+        </div>
+        <div class="rts__domains">
+          {p.domains.map((d) => (
+            <fieldset>
+              <legend>{d.title}</legend>
+              {d.items.map((it) => (
+                <label class="rts__chk"><input type="checkbox" /><span>{it}</span></label>
+              ))}
+            </fieldset>
+          ))}
+        </div>
+        <div class="rts__meter">
+          <div class="rts__bar" aria-hidden="true"><i data-bar></i></div>
+          <span class="rts__count" data-count aria-live="polite">0 / {total} 항목 점검</span>
+          <button type="button" class="rts__reset" data-reset>초기화</button>
+        </div>
+      </section>
+    );
+  })}
+
+  <p class="rts__note">{rtsNote}</p>
+  <p class="rts__cite">근거: <a href={rtsCitation.doi} target="_blank" rel="noopener noreferrer">{rtsCitation.text} ↗</a></p>
+</div>
+
+<style>
+  .rts { background: #fff; color: var(--ink); border-radius: var(--radius-lg); border: 1px solid var(--line); box-shadow: var(--shadow-lg); padding: 28px; }
+  .rts__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; position: relative; }
+  .rts__step { position: relative; text-align: left; font: inherit; cursor: pointer; padding: 18px 20px 18px 20px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg-soft); display: flex; flex-direction: column; gap: 2px; transition: border-color .2s, background .2s, box-shadow .2s; }
+  .rts__step:hover { border-color: var(--navy-700); }
+  .rts__step[aria-selected='true'] { background: var(--navy-900); border-color: var(--navy-900); color: #fff; box-shadow: 0 10px 24px rgba(11, 35, 64, .25); }
+  .rts__no { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--accent-600); }
+  .rts__step[aria-selected='true'] .rts__no { color: var(--accent-300); }
+  .rts__step strong { font-size: 19px; font-weight: 800; letter-spacing: -0.03em; }
+  .rts__step em { font-style: normal; font-size: 12.5px; color: var(--ink-3); }
+  .rts__step[aria-selected='true'] em { color: rgba(255, 255, 255, .65); }
+  .rts__done { position: absolute; right: 14px; top: 14px; width: 24px; height: 24px; border-radius: 50%; background: var(--teal-600); color: #fff; display: none; place-items: center; font-size: 13px; font-weight: 800; }
+  .rts__step.is-done .rts__done { display: grid; }
+  .rts__panel { margin-top: 24px; }
+  .rts__top { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: start; }
+  .rts__top h3 { font-size: 26px; font-weight: 800; color: var(--navy-900); }
+  .rts__top h3 small { margin-left: 8px; font-size: 14px; font-weight: 600; color: var(--ink-3); }
+  .rts__goal { margin-top: 8px; color: var(--ink-2); }
+  .rts__lead { padding: 14px 18px; border-radius: var(--radius); background: var(--accent-50); border: 1px solid var(--accent-100); }
+  .rts__lead span { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--accent-600); }
+  .rts__lead p { margin-top: 4px; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
+  .rts__domains { margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  fieldset { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; min-width: 0; }
+  legend { padding: 0 8px; font-size: 13.5px; font-weight: 800; color: var(--navy-900); }
+  .rts__chk { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; cursor: pointer; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .rts__chk input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent-600); flex-shrink: 0; cursor: pointer; }
+  .rts__chk input:checked + span { color: var(--ink); text-decoration: line-through; text-decoration-color: rgba(194, 65, 12, .45); }
+  .rts__meter { margin-top: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .rts__bar { flex: 1 1 200px; height: 10px; border-radius: 999px; background: #e9eef3; overflow: hidden; }
+  .rts__bar i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--teal-600), var(--accent-500)); transition: width .35s cubic-bezier(.2, .7, .2, 1); }
+  .rts__count { font-size: 14px; font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+  .rts__reset { font: inherit; font-size: 13px; font-weight: 600; color: var(--ink-3); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .rts__reset:hover { color: var(--ink); border-color: var(--navy-900); }
+  .rts__note { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--ink-2); }
+  .rts__cite { margin-top: 8px; font-size: 12.5px; color: var(--ink-3); line-height: 1.6; }
+  .rts__cite a:hover { text-decoration: underline; }
+  @media (max-width: 800px) { .rts { padding: 18px; } .rts__steps { grid-template-columns: 1fr; } .rts__top { grid-template-columns: 1fr; gap: 16px; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-rts]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('.rts__step')];
+    const panels = [...root.querySelectorAll<HTMLElement>('.rts__panel')];
+
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p, k) => (p.hidden = k !== i));
+    };
+
+    const update = (panel: HTMLElement) => {
+      const boxes = [...panel.querySelectorAll<HTMLInputElement>('input[type=checkbox]')];
+      const done = boxes.filter((b) => b.checked).length;
+      const total = Number(panel.dataset.total) || boxes.length;
+      const bar = panel.querySelector<HTMLElement>('[data-bar]');
+      const count = panel.querySelector<HTMLElement>('[data-count]');
+      if (bar) bar.style.width = `${(done / total) * 100}%`;
+      if (count) count.textContent = `${done} / ${total} 항목 점검`;
+      const idx = panels.indexOf(panel);
+      tabs[idx]?.classList.toggle('is-done', done === total);
+    };
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+      });
+    });
+    panels.forEach((p) => {
+      p.addEventListener('change', () => update(p));
+      p.querySelector('[data-reset]')?.addEventListener('click', () => {
+        p.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((b) => (b.checked = false));
+        update(p);
+      });
+    });
+  });
+</script>
