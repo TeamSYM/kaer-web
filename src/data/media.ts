@@ -8,14 +8,14 @@ export type Photo = {
 
 export const photos = {
   'msk-shoulder': {
-    src: '/img/photos/msk-shoulder.jpg', w: 1600, h: 1066, pos: 'center 30%',
-    alt: '물리치료사가 엎드린 환자의 어깨 관절을 움직이며 치료하는 모습',
-    by: 'Marc Zeman', url: 'https://unsplash.com/photos/uLWW09LLG04', site: 'Unsplash',
+    src: '/img/photos/msk-shoulder.jpg', w: 1600, h: 1067, pos: 'center 30%',
+    alt: '트레이너가 어깨 위로 팔을 올려 스트레칭하는 사람의 자세를 잡아 주는 모습',
+    by: 'Andres Ayrton', url: 'https://www.pexels.com/photo/positive-overweigh-woman-stretching-arms-with-asian-trainer-in-park-6551249/', site: 'Pexels',
   },
   'postop-knee': {
-    src: '/img/photos/postop-knee.jpg', w: 1600, h: 1066, pos: 'center 35%',
-    alt: '물리치료사가 누워 있는 환자의 무릎을 잡고 가동 치료를 하는 모습',
-    by: 'yury kirillov', url: 'https://unsplash.com/photos/pbUWW-CBoqY', site: 'Unsplash',
+    src: '/img/photos/postop-knee.jpg', w: 1600, h: 1067, pos: 'center 55%',
+    alt: '한 사람이 누워 있는 사람의 발을 잡고 하체 운동을 도와주는 모습',
+    by: 'Ketut Subiyanto', url: 'https://www.pexels.com/photo/a-man-doing-sit-ups-4853717/', site: 'Pexels',
   },
   'sport-start': {
     src: '/img/photos/sport-start.jpg', w: 1600, h: 720, pos: 'center 55%',
@@ -23,46 +23,46 @@ export const photos = {
     by: 'Serghei Trofimov', url: 'https://unsplash.com/photos/XIKBB9upCcI', site: 'Unsplash',
   },
   'gait-bars': {
-    src: '/img/photos/gait-bars.jpg', w: 1000, h: 1500, pos: 'center 42%',
-    alt: '평행봉 앞에서 환자와 이야기하며 보행 재활을 돕는 치료사',
-    by: 'Ortopediatri Çocuk Ortopedi Akademisi', url: 'https://unsplash.com/photos/7vXHRcMGETQ', site: 'Unsplash',
+    src: '/img/photos/gait-bars.jpg', w: 1000, h: 1500, pos: 'center 40%',
+    alt: '마주 선 두 사람이 손을 맞잡고 균형 자세를 지도하는 모습',
+    by: 'Ketut Subiyanto', url: 'https://www.pexels.com/photo/young-man-and-girl-doing-arm-stretching-exercise-4852728/', site: 'Pexels',
   },
   'clinic-team': {
-    src: '/img/photos/clinic-team.jpg', w: 1600, h: 1066, pos: 'center 40%',
-    alt: '평행봉을 잡은 환자 곁에서 진료 내용을 확인하는 의사',
-    by: 'Ortopediatri Çocuk Ortopedi Akademisi', url: 'https://unsplash.com/photos/B3qVNvZ0AHY', site: 'Unsplash',
+    src: '/img/photos/clinic-team.jpg', w: 1600, h: 1068, pos: 'center 40%',
+    alt: '진료실에서 의사가 환자와 마주 앉아 내용을 확인하는 모습',
+    by: 'Chokniti Khongchum', url: 'https://www.pexels.com/photo/a-woman-in-white-lab-gown-5593720/', site: 'Pexels',
   },
   reformer: {
     src: '/img/photos/reformer.jpg', w: 1000, h: 1500, pos: 'center 45%',
-    alt: '재활 운동 기구 위에 누운 환자를 지도하는 치료사',
-    by: 'Ahmet Kurt', url: 'https://unsplash.com/photos/-MLRlIgtPYU', site: 'Unsplash',
+    alt: '운동 기구 위에서 자세를 점검하며 지도하는 트레이너와 이용자',
+    by: 'Ketut Subiyanto', url: 'https://www.pexels.com/photo/a-couple-setting-up-an-elliptical-trainer-4853878/', site: 'Pexels',
   },
   'teach-dumbbell': {
-    src: '/img/photos/teach-dumbbell.jpg', w: 1600, h: 1066, pos: 'center 45%',
-    alt: '치료사가 환자의 손을 잡고 가벼운 덤벨 운동을 안내하는 모습',
-    by: 'Sincerely Media', url: 'https://unsplash.com/photos/gWQNG2wMLwA', site: 'Unsplash',
+    src: '/img/photos/teach-dumbbell.jpg', w: 1600, h: 1067, pos: 'center 45%',
+    alt: '트레이너가 케이블 운동 기구를 당기는 이용자에게 자세를 안내하는 모습',
+    by: 'Andres Ayrton', url: 'https://www.pexels.com/photo/optimistic-asian-coach-clapping-hands-while-supporting-woman-6551434/', site: 'Pexels',
   },
   'demo-arm': {
-    src: '/img/photos/demo-arm.jpg', w: 1600, h: 1066, pos: 'center 45%',
-    alt: '치료사와 환자가 마주 서서 팔 운동을 시연하는 모습',
-    by: 'Sincerely Media', url: 'https://unsplash.com/photos/lFAiVJNtmj4', site: 'Unsplash',
+    src: '/img/photos/demo-arm.jpg', w: 1600, h: 1067, pos: 'center 45%',
+    alt: '두 사람이 마주 서서 팔 스트레칭 동작을 함께 시연하는 모습',
+    by: 'Ketut Subiyanto', url: 'https://www.pexels.com/photo/young-athletes-training-togather-outdoors-4853032/', site: 'Pexels',
   },
   'care-hands': {
-    src: '/img/photos/care-hands.jpg', w: 1600, h: 1066, pos: 'center 40%',
-    alt: '치료사가 환자의 팔을 잡고 부드럽게 지지하는 모습',
-    by: 'Sincerely Media', url: 'https://unsplash.com/photos/qzmPDJJOz4c', site: 'Unsplash',
+    src: '/img/photos/care-hands.jpg', w: 1600, h: 1067, pos: 'center 40%',
+    alt: '트레이너가 상대의 팔꿈치를 잡고 어깨 스트레칭을 부드럽게 도와주는 모습',
+    by: 'Andres Ayrton', url: 'https://www.pexels.com/photo/asian-trainer-helping-plus-sized-female-stretching-in-park-6551241/', site: 'Pexels',
   },
 } satisfies Record<string, Photo>;
 
 export type PhotoKey = keyof typeof photos;
 
-// 홈 히어로 영상: 아래 세 클립을 이어 붙여 14초로 편집했다(무음, 반복 재생).
+// 홈 히어로 영상: 아래 세 클립을 이어 붙여 약 17초로 편집했다(무음, 반복 재생).
 export const heroVideo = {
   src: '/video/hero.mp4',
   poster: '/video/hero-poster.jpg',
   clips: [
-    { title: 'Man on knees strengthening the back', by: 'Kampus Production', url: 'https://www.pexels.com/video/man-on-knees-strengthening-the-back-6111110/' },
-    { title: 'Man having a physical therapy', by: 'Kampus Production', url: 'https://www.pexels.com/video/man-having-a-physical-therapy-6111045/' },
-    { title: 'Man having a physical therapy', by: 'Kampus Production', url: 'https://www.pexels.com/video/man-having-a-physical-therapy-6111025/' },
+    { title: 'A couple exercising together', by: 'Ketut Subiyanto', url: 'https://www.pexels.com/video/a-couple-exercising-together-4858885/' },
+    { title: 'A couple exercising together', by: 'Ketut Subiyanto', url: 'https://www.pexels.com/video/a-couple-exercising-together-4858700/' },
+    { title: 'Couple doing exercise together', by: 'Ketut Subiyanto', url: 'https://www.pexels.com/video/couple-doing-exercise-together-4858884/' },
   ],
 };
