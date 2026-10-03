@@ -46,10 +46,13 @@ def emblem_svg(with_text=True):
             '%s%s%s</svg>') % (hexc(NAVY), hexc(ORANGE), d, halo, nodes, text)
 
 
-io.open(OUT + '/img/emblem.svg', 'w', encoding='utf-8').write(emblem_svg())
+import shutil
+LOGO = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'proposals', 'logos')
+shutil.copy(LOGO + '/logo-G3-symbol.svg', OUT + '/img/emblem.svg')
+shutil.copy(LOGO + '/logo-G3-symbol-white.svg', OUT + '/img/emblem-white.svg')
 
 
-def emblem_png(size, with_text=True):
+def emblem_png_old(size, with_text=True):
     S = 4
     N = 512 * S
     im = Image.new('RGBA', (N, N), (0, 0, 0, 0))
@@ -74,12 +77,18 @@ def emblem_png(size, with_text=True):
     return im.resize((size, size), Image.LANCZOS)
 
 
+def emblem_png(size, with_text=True, white=False):
+    im = Image.open(LOGO + '/logo-G3-symbol%s.png' % ('-white' if white else '')).convert('RGBA')
+    return im.resize((size, size), Image.LANCZOS)
+
+
 emblem_png(512).save(OUT + '/img/emblem.png')
+emblem_png(512, white=True).save(OUT + '/img/emblem-white.png')
 emblem_png(256).save(OUT + '/img/logo-256.png')
-fav = emblem_png(256, with_text=False)
+fav = emblem_png(256)
 fav.save(OUT + '/favicon.ico', sizes=[(16, 16), (32, 32), (48, 48)])
 ic = Image.new('RGBA', (180, 180), WHITE + (255,))
-ic.alpha_composite(emblem_png(160, with_text=False), (10, 10))
+ic.alpha_composite(emblem_png(140), (20, 20))
 ic.convert('RGB').save(OUT + '/apple-touch-icon.png')
 
 # ---------- 히어로 일러스트 (SVG) ----------
@@ -157,7 +166,7 @@ dd.ellipse(((x - 58) * S2, (y - 58) * S2, (x + 58) * S2, (y + 58) * S2), outline
 layer = layer.resize((W, H), Image.LANCZOS)
 og = Image.alpha_composite(og, layer)
 d = ImageDraw.Draw(og)
-em = emblem_png(120, with_text=False)
+em = emblem_png(120, white=True)
 og.alpha_composite(em, (72, 72))
 d.rectangle((72, 252, 136, 258), fill=ORANGE)
 f1 = ImageFont.truetype(FB, 76)
@@ -173,5 +182,5 @@ for t, r, col, lab, off in marks:
     d.text((x + off[0], y + off[1]), lab, font=fl, fill=(255, 255, 255, 235))
 og.convert('RGB').save(OUT + '/img/og.jpg', quality=88, optimize=True)
 
-for f in ('img/emblem.svg', 'img/emblem.png', 'favicon.ico', 'apple-touch-icon.png', 'img/hero-illustration.svg', 'img/hero-bg.svg', 'img/og.jpg'):
+for f in ('img/emblem.svg', 'img/emblem.png', 'img/emblem-white.png', 'favicon.ico', 'apple-touch-icon.png', 'img/hero-illustration.svg', 'img/hero-bg.svg', 'img/og.jpg'):
     print(f, os.path.getsize(OUT + '/' + f))
