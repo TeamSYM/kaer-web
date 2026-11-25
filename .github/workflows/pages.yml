@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+# main에 올리면 빌드해서 https://teamsym.github.io/kaer-web/ 에 배포한다.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://teamsym.github.io
+      SITE_BASE: /kaer-web
+      # GitHub Pages에는 신청서를 받을 서버(api/apply.php)가 없어 양식을 잠근다.
+      PUBLIC_FORM_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node tools/apply-base.mjs
+      # 정적 호스팅에서는 PHP가 실행되지 않으므로 소스가 그대로 노출되지 않게 뺀다.
+      - run: rm -rf dist/api
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

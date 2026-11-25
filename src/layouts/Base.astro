@@ -27,9 +27,17 @@ const {
 } = Astro.props;
 
 const origin = new URL(Astro.site!).origin;
-const abs = (u: string) => new URL(u, Astro.site).href;
-const path = Astro.url.pathname;
-const canonical = abs(path);
+// 하위 경로(예: GitHub Pages의 /kaer-web)에 올릴 때도 주소가 맞도록 base를 붙인다.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (u: string) => {
+  if (!base || !u.startsWith('/')) return u;
+  if (u === base) return `${base}/`;
+  return u.startsWith(`${base}/`) ? u : `${base}${u}`;
+};
+const abs = (u: string) => new URL(withBase(u), Astro.site).href;
+const fullPath = Astro.url.pathname;
+const path = base && fullPath.startsWith(base) ? fullPath.slice(base.length) || '/' : fullPath;
+const canonical = abs(fullPath);
 
 // 제목: 검색결과에서 잘리지 않도록 60자 안쪽으로 맞춘다.
 const homeTitle = `${site.name} | 근거 기반 운동재활 학술단체`;
@@ -49,10 +57,10 @@ const graph: Record<string, unknown>[] = [
     '@id': orgId,
     name: site.name,
     alternateName: [site.nameEn, site.short],
-    url: `${origin}/`,
+    url: abs('/'),
     logo: abs('/img/emblem.png'),
   },
-  { '@type': 'WebSite', '@id': `${origin}/#website`, url: `${origin}/`, name: site.name, inLanguage: 'ko-KR', publisher: { '@id': orgId } },
+  { '@type': 'WebSite', '@id': `${origin}/#website`, url: abs('/'), name: site.name, inLanguage: 'ko-KR', publisher: { '@id': orgId } },
   ...(trail.length
     ? [{
         '@type': 'BreadcrumbList',
